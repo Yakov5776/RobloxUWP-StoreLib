@@ -26,7 +26,7 @@ jobs:
       
     - name: Query Package
       run: |
-        OUTPUT=$(dotnet run --project RobloxUWP-StoreLib -query)
+        output=$(dotnet run --project RobloxUWP-StoreLib -query)
         echo "RELEASE_TAG=$(echo "$output")" >> $GITHUB_ENV
     
     - name: Download Package
