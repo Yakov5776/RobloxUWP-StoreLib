@@ -37,8 +37,9 @@ jobs:
       with:
         name: ${{ env.RELEASE_TAG }}
         tag: ${{ env.RELEASE_TAG }}
+        body: ${{ env.RELEASE_TAG }}
         commit: ${{ github.sha }}
-        artifacts: msixbundle
+        artifacts: "*.msixbundle"
         allowUpdates: true
         removeArtifacts: false
         replacesArtifacts: false
