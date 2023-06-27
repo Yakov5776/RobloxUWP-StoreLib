@@ -3,11 +3,15 @@ using StoreLib.Services;
 
 class Program
 {
+    const string PackageID = "9NBLGGGZM6WM";
+    const string PackageSignature = "ROBLOXCORPORATION";
+
     static async Task Main(string[] args)
     {
         DisplayCatalogHandler dcatHandler = DisplayCatalogHandler.ProductionConfig();
-        await dcatHandler.QueryDCATAsync("9NBLGGGZM6WM");
+        await dcatHandler.QueryDCATAsync(PackageID);
 
+        bool QueryOnly = args.Length > 0 && args[0] == "-query";
 
         if (dcatHandler.IsFound)
         {
@@ -15,7 +19,11 @@ class Program
 
             foreach (PackageInstance package in packages)
             {
-                if (package.PackageMoniker.StartsWith("ROBLOXCORPORATION")) await DownloadPackage(package.PackageUri, package.PackageMoniker);
+                if (package.PackageMoniker.StartsWith(PackageSignature))
+                    if (QueryOnly)
+                        Console.WriteLine(package.PackageMoniker);
+                    else
+                        await DownloadPackage(package.PackageUri, package.PackageMoniker);
             }
         }
         else
