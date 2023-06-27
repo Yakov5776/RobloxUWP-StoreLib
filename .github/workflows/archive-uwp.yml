@@ -28,24 +28,17 @@ jobs:
       run: |
         OUTPUT=$(dotnet run --project RobloxUWP-StoreLib -query)
         echo "RELEASE_TAG=$(echo "$output")" >> $GITHUB_ENV
-
-    - name: Check for Release Tag
-      id: check_release_tag
-      uses: octokit/request-action@v2.x
-      with:
-        route: GET /repos/${{ github.repository }}/releases/tags/${{ env.RELEASE_TAG }}
     
     - name: Download Package
-      if: steps.check_release_tag.outputs.status != '200'
       run: dotnet run --project RobloxUWP-StoreLib
         
     - name: Pushing to release
-      if: steps.check_release_tag.outputs.status != '200'
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.RELEASE_TAG }}
         tag: ${{ env.RELEASE_TAG }}
         commit: ${{ github.sha }}
         artifacts: msixbundle
-        
-          
+        allowUpdates: true
+        removeArtifacts: false
+        replacesArtifacts: false
