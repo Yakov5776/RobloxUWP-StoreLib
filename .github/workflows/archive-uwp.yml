@@ -30,12 +30,20 @@ jobs:
       run: |
         output=$(dotnet run --project RobloxUWP-StoreLib -query)
         echo "RELEASE_TAG=$(echo "$output")" >> $GITHUB_ENV
+        
+    - name: Check if release exists
+      run: |
+        response=$(curl --silent "https://api.github.com/repos/Yakov5776/RobloxUWP-StoreLib/releases/tags/${{ env.RELEASE_TAG }}")
+        id=$(echo "$response" | jq '.id' -r)
+        echo "EXISTING_RELEASE=$id" >> $GITHUB_ENV
     
     - name: Download Package
       run: dotnet run --project RobloxUWP-StoreLib
+      if: env.EXISTING_RELEASE == 'null'
         
     - name: Pushing to release
       uses: ncipollo/release-action@v1
+      if: env.EXISTING_RELEASE == 'null'
       with:
         name: ${{ env.RELEASE_TAG }}
         tag: ${{ env.RELEASE_TAG }}
