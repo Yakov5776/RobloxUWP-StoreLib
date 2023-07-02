@@ -1,8 +1,11 @@
 name: .NET Core Desktop
 
 on:
-  - "push"
-  - "pull_request"
+  push:
+    paths-ignore:
+      - '.github/workflows/*'
+      - '*.md'
+  pull_request:
 
 jobs:
 
