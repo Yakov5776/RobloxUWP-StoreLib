@@ -20,10 +20,12 @@ class Program
             foreach (PackageInstance package in packages)
             {
                 if (package.PackageMoniker.StartsWith(PackageSignature))
+                {
                     if (QueryOnly)
                         Console.WriteLine(package.PackageMoniker.Replace("_~", ""));
                     else
                         await DownloadPackage(package.PackageUri, package.PackageMoniker);
+                }
             }
         }
         else
