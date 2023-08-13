@@ -42,6 +42,7 @@ jobs:
       if: env.EXISTING_RELEASE == 'null'
 
     - name: Calculate file size
+      if: env.EXISTING_RELEASE == 'null'
       run: |
         size=$(du -b *.msixbundle | cut -f1)
         echo "FILE_SIZE=$(echo "$size")" >> $GITHUB_ENV
