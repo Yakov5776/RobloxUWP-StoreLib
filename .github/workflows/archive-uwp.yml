@@ -5,7 +5,7 @@ permissions: write-all
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 * * * *"
   workflow_dispatch:
 jobs:
 
@@ -40,10 +40,15 @@ jobs:
     - name: Download Package
       run: dotnet run --project RobloxUWP-StoreLib
       if: env.EXISTING_RELEASE == 'null'
+
+    - name: Calculate file size
+      run: |
+        size=$(du -b *.msixbundle | cut -f1)
+        echo "FILE_SIZE=$(echo "$size")" >> $GITHUB_ENV
         
     - name: Pushing to release
       uses: ncipollo/release-action@v1
-      if: env.EXISTING_RELEASE == 'null'
+      if: env.EXISTING_RELEASE == 'null' && env.FILE_SIZE > 2097152 # 2mb in size
       with:
         name: ${{ env.RELEASE_TAG }}
         tag: ${{ env.RELEASE_TAG }}
