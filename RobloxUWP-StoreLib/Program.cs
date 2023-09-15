@@ -4,7 +4,7 @@ using StoreLib.Services;
 class Program
 {
     const string PackageID = "9NBLGGGZM6WM";
-    const string PackageSignature = "ROBLOXCORPORATION";
+    const string PackageSignature = "ROBLOXCORPORATION.ROBLOX_20";
 
     static async Task Main(string[] args)
     {
