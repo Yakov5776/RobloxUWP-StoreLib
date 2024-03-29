@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+    color: #ffffff;
+  }
+  
+  h1 {
+    text-align: center;
+    padding: 30px 0;
+  }
+  
+  #releases-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+  }
+  
+  .release-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #555;
+  }
+  
+  .release-entry:last-child {
+    border-bottom: none;
+  }
+  
+  .download-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .download-icon {
+    width: 20px;
+    height: auto;
+    margin: 4px;
+  }
+  
+  .download-link:hover {
+    background: #363636;
+    border-radius: 4px;
+  }
