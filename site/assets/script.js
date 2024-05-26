@@ -1,6 +1,7 @@
 const perPage = 30;
 let currentPage = 1;
 let isLoading = false;
+let hasMoreReleases = true;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await loadReleases(currentPage, perPage);
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const distanceToBottom = document.documentElement.scrollHeight - document.documentElement.scrollTop;
     const shouldLoadMoreReleases = distanceToBottom === document.documentElement.clientHeight;
 
-    if (shouldLoadMoreReleases && !isLoading) {
+    if (shouldLoadMoreReleases && !isLoading && hasMoreReleases) {
       isLoading = true;
       currentPage++;
       await loadReleases(currentPage, perPage);
@@ -22,6 +23,9 @@ async function loadReleases(page, perPage) {
   const releasesWrapper = document.getElementById("releases-wrapper");
   const response = await fetch(`https://api.github.com/repos/Yakov5776/RobloxUWP-StoreLib/releases?per_page=${perPage}&page=${page}`);
   const releases = await response.json();
+
+  if (releases.length < perPage)
+    hasMoreReleases = false;
 
   for (const release of releases) {
     const releaseEntry = document.createElement("div");
