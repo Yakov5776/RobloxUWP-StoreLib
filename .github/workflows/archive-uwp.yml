@@ -4,8 +4,6 @@ name: Archive UWP
 permissions: write-all
 
 on:
-  schedule:
-    - cron: "0 * * * *"
   workflow_dispatch:
 jobs:
 
@@ -44,7 +42,7 @@ jobs:
         
     - name: Pushing to release
       uses: ncipollo/release-action@v1
-      if: env.EXISTING_RELEASE == 'null' && env.FILE_SIZE > 2097152 # 2mb in size
+      if: env.EXISTING_RELEASE == 'null'
       with:
         name: ${{ env.RELEASE_TAG }}
         tag: ${{ env.RELEASE_TAG }}
