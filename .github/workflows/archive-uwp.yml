@@ -15,15 +15,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       
-    - name: Install dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build
-      
     - name: Query Package
       run: |
-        output=$(dotnet run --project RobloxUWP-StoreLib -query)
+        output=ROBLOXCORPORATION.ROBLOX_2025.920.2.0_neutral_55nm5eh3cm0pr
         echo "RELEASE_TAG=$(echo "$output")" >> $GITHUB_ENV
         
     - name: Check if release exists
@@ -33,8 +27,9 @@ jobs:
         echo "EXISTING_RELEASE=$id" >> $GITHUB_ENV
     
     - name: Download Package
-      run: dotnet run --project RobloxUWP-StoreLib
       if: env.EXISTING_RELEASE == 'null'
+      run: |
+        curl -L "http://tlu.dl.delivery.mp.microsoft.com/filestreamingservice/files/3752c5c8-0428-491f-b4f6-db4a64425073?P1=1758831918&P2=404&P3=2&P4=GG%2byrOSY4ymiSeP931txMr2PjosEJmAFpew43QVC8UrD4fVhpyo1H5wbf6WSe%2blFKri8yKUgGPlLh1vUzyK%2b6w%3d%3d" -o "ROBLOXCORPORATION.ROBLOX_2025.920.2.0_neutral_._55nm5eh3cm0pr.msixbundle"
 
     - name: Calculate file size
       if: env.EXISTING_RELEASE == 'null'
